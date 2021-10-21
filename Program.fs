@@ -16,6 +16,17 @@ open Types
 
 open System.Text.RegularExpressions
 
+type SecretApi =
+    { Token: string
+      AllFlatmates: Flatmate list
+      InitialPutzplan: Putzplan
+      DefaultMainChat: int64 }
+
+let apiProof =
+    { Token = Secret.Token
+      AllFlatmates = Secret.allFlatmates
+      InitialPutzplan = Secret.initialPutzplan
+      DefaultMainChat = Secret.defaultMainChat }
 
 
 let (|Regex|_|) pattern input =
@@ -296,11 +307,10 @@ let onMessage context =
                     let response =
                         """⭐️Available commands:
 /ls - Show the Putzplan
-/ls Name - Show the tasks of one person
 /done - Gives you a keyboard of all your tasks, click the one you did
-/done Task - Marks the task as done. If it wasn't yours it will stay with the current person
+/done task - Marks the task as done. If it wasn't yours it will stay with the current person
 /bump - Gives you a keyboard of all tasks, click the one you want to increase the priority of
-/bump taks - Increases the priority of the task and pings the responsible person in the main chat
+/bump task - Increases the priority of the task and pings the responsible person in the main chat
 /rmk - Should you be stuck with a custom keyboard, this will get rid of it. Should not be needed.
 /showmewhatyouvegot - Gives you a json of the current internal model.
 /remind - reminds everybody of all their **overdue!** tasks
